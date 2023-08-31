@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { WindowsService } from 'src/services/windows.service';
+
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,19 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'outseta_Integration';
+  windowOutseta: any;
+
+  constructor(private globalService: WindowsService) {
+    this.windowOutseta = this.globalService.getWindowObject();
+  }
+  ngOnInit(){
+    console.log("windows",this.windowOutseta.Outseta.auth.open({}))
+  }
+
+   onLogin(){
+    this.windowOutseta.Outseta.auth.open({})
+
+  }
+
+
 }
