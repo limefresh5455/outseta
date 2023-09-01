@@ -14,13 +14,6 @@ export class AppComponent {
     this.windowOutseta = this.globalService.getWindowObject();
   }
   ngOnInit(){
-    console.log("windows",this.windowOutseta.Outseta.auth.open({}))
+    // console.log("windows",this.windowOutseta.Outseta.auth.open({}))
   }
-
-   onLogin(){
-    this.windowOutseta.Outseta.auth.open({})
-
-  }
-
-
 }
