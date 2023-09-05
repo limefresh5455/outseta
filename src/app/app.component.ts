@@ -7,19 +7,50 @@ import { OutsetaService } from 'src/services/outseta.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  outsetaData:any
+  outsetaData:any;
+  accessToken: string | null = null;
+  setAccessToken :any;
 
   constructor (private outsetaService: OutsetaService) {
-    this.outsetaData = this.outsetaService.loadOutseta()
-  }
-  openLoginModal=()=>{
-    this.outsetaService.openLogin()
-  }
-  openSignUpModal=()=>{
-    this.outsetaService.openSignUp()
+    this.outsetaData = this.outsetaService.loadOutseta();
   }
 
-  openProfileModal=()=>{
-    this.outsetaService.openSignUp()
+  ngOnInit(){
+    this.extractAccessToken();
   }
+
+  private extractAccessToken() {
+    const queryParams = new URLSearchParams(window.location.search);
+    const accessToken = queryParams.get('access_token');
+    if (accessToken) {
+      this.accessToken = accessToken;
+      console.log(this.accessToken)
+    }
+  }
+
+  openLoginModal=()=>{
+    if (this.accessToken) {
+      this.outsetaService.setAccessToken(this.accessToken)
+      this.outsetaService.openLogin();
+      console.log('user login successfully');
+    }else{
+      console.log('incorrect login');
+    }
+
+  }
+
+  openSignUpModal=()=>{
+    this.outsetaService.openSignUp();
+  }
+
+
+
+  handleLogOut=()=>{
+    this.outsetaService.logoutModal();
+    console.log('logout is working')
+  }
+
+  // openProfileModal=()=>{
+  //   this.outsetaService.setAccessToken()
+  // }
 }

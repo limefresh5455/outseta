@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
+import { Router,ActivatedRoute,Params } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class OutsetaService {
   datasetValue: any;
   setOutsetValue: any;
   outSetaData: any;
+
 
   OUTSETA_ID = "DemoOutseta";
 
@@ -58,6 +61,7 @@ export class OutsetaService {
 
   openLogin = () => {
     const outsetaInstance: any = window.DemoOutseta
+    console.log('check user', outsetaInstance)
     outsetaInstance.auth.open({
       widgetMode: "login|register",
       authenticationCallbackUrl: window.location.href,
@@ -66,13 +70,28 @@ export class OutsetaService {
   }
   openSignUp = () => {
     const outsetaInstance: any = window.DemoOutseta
-    outsetaInstance.auth.open(  {widgetMode: "register",
+
+    outsetaInstance.auth.open({widgetMode: "register",
     authenticationCallbackUrl: window.location.href})
   }
   openProfileModal = () => {
     const outsetaInstance: any = window.DemoOutseta
-    outsetaInstance.auth.open( { tab: "profile"})
+    outsetaInstance.profile.open({ tab: "profile"})
   }
 
+  // showGetUser=async ()=>{
+  //   const outsetaInstance: any = window.DemoOutseta
+  //   const userData = outsetaInstance.getUser()
+  //   console.log('get useer work', userData)
+  // }
 
+  setAccessToken= (token:any)=>{
+    const outsetaInstance: any = window.DemoOutseta
+     outsetaInstance.setAccessToken(token)
+  }
+
+  logoutModal= ()=>{
+    const outsetaInstance: any = window.DemoOutseta
+     outsetaInstance.setAccessToken('')
+  }
 }

@@ -8,9 +8,20 @@
       <div class="navbar-nav">
         <a class="nav-link xxx" (click) = openLoginModal()>Login</a>
         <a class="nav-link xxx"  (click) = openSignUpModal()>Signup</a>
-        <a class="nav-link xxx"  (click) = openProfileModal()>Profile</a>
+        <!-- <a class="nav-link xxx"  (click) = openProfileModal()>Profile</a> -->
+        <a class="nav-link xxx"  (click) = handleLogOut()>Log Out</a>
       </div>
     </div>
   </div>
-</nav>
+  </nav>
+
+<div class="card text-right" style="width: 50rem; margin-left: 100px;" *ngIf="this.accessToken ; else loggedOut">
+  <div class="card-body">
+    <h1 class="card-title textBg">Welcome</h1>
+    <p class="card-text ">With supporting text below as a natural lead-in to additional content.</p>
+  </div>
+</div>
+<ng-template #loggedOut>
+  Please friend, login.
+</ng-template>
 <router-outlet></router-outlet>
