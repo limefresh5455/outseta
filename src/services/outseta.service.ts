@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { Router,ActivatedRoute,Params } from '@angular/router';
 
 @Injectable({
@@ -9,7 +9,7 @@ export class OutsetaService {
   datasetValue: any;
   setOutsetValue: any;
   outSetaData: any;
-
+  loginUser :any
 
   OUTSETA_ID = "DemoOutseta";
 
@@ -21,6 +21,7 @@ export class OutsetaService {
   };
 
   outsetaPromise: Promise<any> | null = null;
+  constructor(private ngZone: NgZone) {}
 
   private createScript(): HTMLScriptElement {
     const optionsKey = `${this.OUTSETA_ID}Options`;
@@ -41,15 +42,12 @@ export class OutsetaService {
         const script = this.createScript();
         this.setOutsetValue = window;
         script.onload = () => {
-
           if (this.setOutsetValue.DemoOutseta) {
             resolve(this.setOutsetValue.DemoOutseta);
           } else {
             reject(new Error("Outseta.js not available or domain not set"));
           }
-
         };
-
         script.onerror = () => {
           reject(new Error("Failed to load Outseta.js"));
         };
@@ -61,37 +59,43 @@ export class OutsetaService {
 
   openLogin = () => {
     const outsetaInstance: any = window.DemoOutseta
-    console.log('check user', outsetaInstance)
     outsetaInstance.auth.open({
       widgetMode: "login|register",
       authenticationCallbackUrl: window.location.href,
 
     })
   }
+
   openSignUp = () => {
     const outsetaInstance: any = window.DemoOutseta
-
     outsetaInstance.auth.open({widgetMode: "register",
     authenticationCallbackUrl: window.location.href})
   }
-  openProfileModal = () => {
+  openProfile = () => {
     const outsetaInstance: any = window.DemoOutseta
-    outsetaInstance.profile.open({ tab: "profile"})
+    outsetaInstance.profile.open({ tab: "profile", })
+    console.log('service is working')
   }
 
-  // showGetUser=async ()=>{
-  //   const outsetaInstance: any = window.DemoOutseta
-  //   const userData = outsetaInstance.getUser()
-  //   console.log('get useer work', userData)
-  // }
+  showGetUser = async () => {
+    const outsetaInstance: any = window.DemoOutseta;
+     if (outsetaInstance) {
+        await outsetaInstance.getUser();
+        await outsetaInstance.getAccessToken();
+      } else {
+        console.error('Outseta methods not available or not loaded yet.');
+      }
+  }
 
   setAccessToken= (token:any)=>{
-    const outsetaInstance: any = window.DemoOutseta
-     outsetaInstance.setAccessToken(token)
+    const outsetaInstance: any = window.DemoOutseta;
+     outsetaInstance.setAccessToken(token);
   }
 
   logoutModal= ()=>{
-    const outsetaInstance: any = window.DemoOutseta
+    const outsetaInstance: any = window.DemoOutseta;
      outsetaInstance.setAccessToken('')
+    console.log(outsetaInstance.setAccessToken(''))
   }
+
 }

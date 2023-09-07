@@ -16,3 +16,15 @@ cursor: pointer;
   font-weight: 800;
   -webkit-font-smoothing: antialiased;
 }
+
+.alertBox{
+  background-color: red !important;
+  position: relative;
+
+}
+.alertBox_child{
+  position:absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
