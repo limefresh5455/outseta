@@ -12,6 +12,7 @@ export class AppComponent {
   setAccessToken :any;
   loginUserModal : boolean | undefined;
   showNavBar : boolean | undefined;
+  userInfo: any ;
 
   constructor (private outsetaService: OutsetaService) {
     this.outsetaData = this.outsetaService.loadOutseta();
@@ -29,18 +30,16 @@ export class AppComponent {
     if (accessToken) {
       this.loginUserModal =false
       this.accessToken = accessToken;
-
     }
   }
 
   openLoginModal=()=>{
-
     this.outsetaService.openLogin();
     if (this.accessToken) {
       this.outsetaService.setAccessToken(this.accessToken)
       console.log('user login successfully');
     }else{
-      console.log('incorrect login');
+      console.log('Enter Valid details');
     }
   }
 
@@ -49,15 +48,14 @@ export class AppComponent {
   }
 
   handleLogOut=()=>{
-    this.outsetaService.setAccessToken(this.accessToken)
+    this.outsetaService.setAccessToken('')
     this.outsetaService.logoutModal();
   }
 
   openProfileModal=async ()=>{
     this.outsetaService.setAccessToken(this.accessToken)
-     await this.outsetaService.showGetUser()
-     this.outsetaService.openProfile()
-
+    this.userInfo=  await this.outsetaService.showGetUser()
+    this.outsetaService.openProfile()
   }
 
- }
+}

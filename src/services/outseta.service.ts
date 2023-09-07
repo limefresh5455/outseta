@@ -1,5 +1,4 @@
-import { Injectable, NgZone } from '@angular/core';
-import { Router,ActivatedRoute,Params } from '@angular/router';
+import { Injectable} from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +8,6 @@ export class OutsetaService {
   datasetValue: any;
   setOutsetValue: any;
   outSetaData: any;
-  loginUser :any
 
   OUTSETA_ID = "DemoOutseta";
 
@@ -21,7 +19,6 @@ export class OutsetaService {
   };
 
   outsetaPromise: Promise<any> | null = null;
-  constructor(private ngZone: NgZone) {}
 
   private createScript(): HTMLScriptElement {
     const optionsKey = `${this.OUTSETA_ID}Options`;
@@ -62,7 +59,6 @@ export class OutsetaService {
     outsetaInstance.auth.open({
       widgetMode: "login|register",
       authenticationCallbackUrl: window.location.href,
-
     })
   }
 
@@ -71,20 +67,21 @@ export class OutsetaService {
     outsetaInstance.auth.open({widgetMode: "register",
     authenticationCallbackUrl: window.location.href})
   }
+
   openProfile = () => {
     const outsetaInstance: any = window.DemoOutseta
     outsetaInstance.profile.open({ tab: "profile", })
-    console.log('service is working')
   }
 
   showGetUser = async () => {
     const outsetaInstance: any = window.DemoOutseta;
-     if (outsetaInstance) {
-        await outsetaInstance.getUser();
-        await outsetaInstance.getAccessToken();
-      } else {
-        console.error('Outseta methods not available or not loaded yet.');
-      }
+    if (outsetaInstance) {
+     const user =  await outsetaInstance.getUser();
+       return user
+      await outsetaInstance.getAccessToken();
+    } else {
+      console.error('Outseta methods not available or not loaded yet.');
+    }
   }
 
   setAccessToken= (token:any)=>{
@@ -92,10 +89,10 @@ export class OutsetaService {
      outsetaInstance.setAccessToken(token);
   }
 
-  logoutModal= ()=>{
+  logoutModal= async ()=>{
     const outsetaInstance: any = window.DemoOutseta;
      outsetaInstance.setAccessToken('')
-    console.log(outsetaInstance.setAccessToken(''))
+
   }
 
 }

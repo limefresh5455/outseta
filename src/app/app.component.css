@@ -28,3 +28,13 @@ cursor: pointer;
   left: 50%;
   transform: translate(-50%,-50%);
 }
+
+.box{
+
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(144, 175, 214, 0.808);
+  margin: auto 30% ;
+}
